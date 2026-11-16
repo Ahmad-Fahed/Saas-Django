@@ -49,13 +49,13 @@ RUN pip install -r /tmp/requirements.txt
 # RUN python manage.py collectstatic --noinput
 
 # set the Django default project name
-ARG PROJ_NAME="SaasProject"
+ARG PROJ_NAME="Saas"
 
 # create a bash script to run the Django project
 # this script will execute at runtime when
 # the container starts and the database is available
 RUN printf "#!/bin/bash\n" > ./paracord_runner.sh && \
-    printf "RUN_PORT=\"\${PORT:-8000}\"\n\n" >> ./paracord_runner.sh && \
+    printf "RUN_PORT=\"\${PORT:-8080}\"\n\n" >> ./paracord_runner.sh && \
     printf "python manage.py migrate --no-input\n" >> ./paracord_runner.sh && \
     printf "gunicorn ${PROJ_NAME}.wsgi:application --bind \"[::]:\$RUN_PORT\"\n" >> ./paracord_runner.sh
 
